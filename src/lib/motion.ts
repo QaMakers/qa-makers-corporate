@@ -1,0 +1,26 @@
+import type { Variants } from 'framer-motion';
+
+export const fadeInUp: Variants = {
+  initial: { opacity: 0, y: 20 },
+  animate: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] },
+  },
+};
+
+export const staggerContainer: Variants = {
+  initial: {},
+  animate: {
+    transition: { staggerChildren: 0.05 },
+  },
+};
+
+export const staggerItem: Variants = {
+  initial: { opacity: 0, y: 16 },
+  animate: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] },
+  },
+};
