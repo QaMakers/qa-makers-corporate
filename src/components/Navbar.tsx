@@ -15,41 +15,41 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
+    const onScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 bg-white border-b transition-all duration-200 ${
         scrolled
-          ? 'bg-navy/95 backdrop-blur-md border-b border-white/10 shadow-lg shadow-navy/30'
-          : 'bg-transparent border-b border-transparent'
+          ? 'border-gray-100 shadow-[0_1px_12px_rgba(0,0,0,0.07)] py-0'
+          : 'border-gray-100 py-0'
       }`}
       style={{ paddingTop: 'env(safe-area-inset-top, 0px)' }}
     >
-      <nav className="container-content flex items-center justify-between py-4">
-        <a href="#" aria-label="QA Makers — inicio">
+      <nav className="container-content flex items-center justify-between h-16">
+        <a href="#" aria-label="QA Makers — inicio" className="flex items-center shrink-0">
           <QAMakersLogo size="navbar" variant="horizontal" />
         </a>
 
-        <div className="hidden md:flex items-center gap-8">
+        <div className="hidden md:flex items-center gap-7">
           {NAV_LINKS.map((link) => (
             <a
               key={link.href}
               href={link.href}
-              className="relative text-sm font-medium text-white/75 hover:text-white transition-colors group"
+              className="relative text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors group"
             >
               {link.label}
-              <span className="absolute -bottom-0.5 left-0 h-px w-0 bg-electric transition-all duration-300 group-hover:w-full" />
+              <span className="absolute -bottom-0.5 left-0 h-px w-0 bg-electric transition-all duration-250 group-hover:w-full" />
             </a>
           ))}
         </div>
 
         <a
           href="#contacto"
-          className="hidden md:inline-flex items-center rounded bg-electric px-5 py-2.5 text-sm font-semibold text-white hover:bg-electric/90 transition-all duration-200 shadow-md shadow-electric/25 hover:shadow-electric/40"
+          className="hidden md:inline-flex items-center justify-center whitespace-nowrap rounded-lg bg-electric px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#1d5ce6] active:bg-[#1a53d0] transition-colors duration-150 shadow-sm shadow-electric/20"
         >
           Habla con un especialista
         </a>
@@ -57,10 +57,10 @@ export default function Navbar() {
         <button
           type="button"
           aria-label={menuOpen ? 'Cerrar menú' : 'Abrir menú'}
-          className="md:hidden text-white p-1"
+          className="md:hidden text-gray-700 p-1.5 rounded-md hover:bg-gray-100 transition-colors"
           onClick={() => setMenuOpen((open) => !open)}
         >
-          {menuOpen ? <X size={24} /> : <Menu size={24} />}
+          {menuOpen ? <X size={22} /> : <Menu size={22} />}
         </button>
       </nav>
 
@@ -70,15 +70,15 @@ export default function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.2 }}
-            className="md:hidden bg-navy/98 backdrop-blur-md border-t border-white/10 overflow-hidden"
+            transition={{ duration: 0.18, ease: 'easeOut' }}
+            className="md:hidden bg-white border-t border-gray-100 overflow-hidden"
           >
-            <div className="container-content flex flex-col gap-5 py-6">
+            <div className="container-content flex flex-col py-5">
               {NAV_LINKS.map((link) => (
                 <a
                   key={link.href}
                   href={link.href}
-                  className="text-sm font-medium text-white/80 hover:text-white"
+                  className="py-3 text-sm font-medium text-gray-700 hover:text-gray-900 border-b border-gray-50 last:border-0"
                   onClick={() => setMenuOpen(false)}
                 >
                   {link.label}
@@ -86,7 +86,7 @@ export default function Navbar() {
               ))}
               <a
                 href="#contacto"
-                className="inline-flex items-center justify-center rounded bg-electric px-5 py-2.5 text-sm font-semibold text-white"
+                className="mt-4 inline-flex items-center justify-center rounded-lg bg-electric px-5 py-3 text-sm font-semibold text-white"
                 onClick={() => setMenuOpen(false)}
               >
                 Habla con un especialista

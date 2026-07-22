@@ -269,7 +269,7 @@ export default function Hero() {
 
   return (
     <section
-      className="relative bg-navy pt-32 pb-24 md:pt-44 md:pb-32 overflow-hidden"
+      className="relative bg-navy pt-28 pb-24 md:pt-36 md:pb-32 overflow-hidden"
       aria-label="Hero"
     >
       {/* Background depth */}

@@ -5,9 +5,9 @@ interface QAMakersLogoProps {
 }
 
 const SIZE_MAP = {
-  navbar: 'h-10',
-  footer: 'h-9',
-  default: 'h-14',
+  navbar: 'h-8',
+  footer: 'h-8',
+  default: 'h-12',
 };
 
 export default function QAMakersLogo({
@@ -16,7 +16,12 @@ export default function QAMakersLogo({
   className = '',
 }: QAMakersLogoProps) {
   const heightClass = SIZE_MAP[size];
-  const widthClass = variant === 'compact' ? 'w-auto max-w-[40px]' : 'w-auto';
+  const maxWMap: Record<typeof size, string> = {
+    navbar: 'max-w-[180px]',
+    footer: 'max-w-[160px]',
+    default: 'max-w-[220px]',
+  };
+  const widthClass = variant === 'compact' ? 'w-auto max-w-[40px]' : `w-auto ${maxWMap[size]}`;
 
   return (
     <img
