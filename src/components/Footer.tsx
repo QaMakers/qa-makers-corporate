@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import QAMakersLogo from './QAMakersLogo';
 
 export default function Footer() {
   return (
@@ -6,9 +7,8 @@ export default function Footer() {
       <div className="container-content py-16">
         <div className="grid gap-10 md:grid-cols-4">
           <div>
-            <a href="#" className="flex items-center gap-2 font-bold text-white text-lg">
-              <span className="inline-block h-2.5 w-2.5 rounded-full bg-electric" />
-              QA Makers
+            <a href="#" aria-label="QA Makers">
+              <QAMakersLogo size="footer" variant="horizontal" />
             </a>
             <p className="mt-3 text-sm text-white/50">
               Quality Engineering &amp; SaaS Products
