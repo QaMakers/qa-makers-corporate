@@ -5,9 +5,9 @@ interface QAMakersLogoProps {
 }
 
 const SIZE_MAP = {
-  navbar: 'h-8',
-  footer: 'h-7',
-  default: 'h-10',
+  navbar: 'h-10',
+  footer: 'h-9',
+  default: 'h-14',
 };
 
 export default function QAMakersLogo({

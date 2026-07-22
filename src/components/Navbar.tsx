@@ -27,6 +27,7 @@ export default function Navbar() {
           ? 'bg-navy/95 backdrop-blur-md border-b border-white/10 shadow-lg shadow-navy/30'
           : 'bg-transparent border-b border-transparent'
       }`}
+      style={{ paddingTop: 'env(safe-area-inset-top, 0px)' }}
     >
       <nav className="container-content flex items-center justify-between py-4">
         <a href="#" aria-label="QA Makers — inicio">
