@@ -73,12 +73,17 @@ export default function Navbar() {
             transition={{ duration: 0.18, ease: 'easeOut' }}
             className="md:hidden bg-white border-t border-gray-100 overflow-hidden"
           >
-            <div className="container-content flex flex-col py-5">
+            <div
+              className="container-content flex flex-col pt-5"
+              style={{
+                paddingBottom: 'max(2.5rem, calc(env(safe-area-inset-bottom, 0px) + 1.25rem))',
+              }}
+            >
               {NAV_LINKS.map((link) => (
                 <a
                   key={link.href}
                   href={link.href}
-                  className="py-3 text-sm font-medium text-gray-700 hover:text-gray-900 border-b border-gray-50 last:border-0"
+                  className="py-3.5 text-base font-medium text-gray-700 hover:text-gray-900 border-b border-gray-100 last:border-0"
                   onClick={() => setMenuOpen(false)}
                 >
                   {link.label}
@@ -86,7 +91,7 @@ export default function Navbar() {
               ))}
               <a
                 href="#contacto"
-                className="mt-4 inline-flex items-center justify-center rounded-lg bg-electric px-5 py-3 text-sm font-semibold text-white"
+                className="mt-5 inline-flex items-center justify-center rounded-lg bg-electric px-5 py-3.5 text-sm font-semibold text-white active:bg-[#1a53d0]"
                 onClick={() => setMenuOpen(false)}
               >
                 Habla con un especialista

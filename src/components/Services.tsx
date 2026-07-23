@@ -140,7 +140,7 @@ export default function Services() {
                 whileInView={shouldReduceMotion ? undefined : 'animate'}
                 viewport={{ once: true, amount: 0.1 }}
                 variants={staggerContainer}
-                className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3"
+                className="grid gap-3 sm:gap-5 grid-cols-2 sm:grid-cols-2 lg:grid-cols-3"
               >
                 {group.services.map((service) => {
                   const Icon = service.icon;
@@ -148,14 +148,14 @@ export default function Services() {
                     <motion.div
                       key={service.title}
                       variants={shouldReduceMotion ? undefined : staggerItem}
-                      className="group rounded-lg border border-white/[0.07] bg-navy-mid p-6 hover:border-white/15 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-navy/40 transition-all duration-200"
+                      className="group rounded-lg border border-white/[0.07] bg-navy-mid p-4 sm:p-6 hover:border-white/15 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-navy/40 transition-all duration-200"
                     >
-                      <Icon size={24} style={{ color: group.accent }} />
-                      <h3 className="mt-4 text-base font-semibold text-white">{service.title}</h3>
-                      <p className="mt-2 text-sm text-white/55 leading-relaxed">
+                      <Icon size={20} style={{ color: group.accent }} />
+                      <h3 className="mt-3 sm:mt-4 text-sm sm:text-base font-semibold text-white">{service.title}</h3>
+                      <p className="mt-1.5 sm:mt-2 text-xs sm:text-sm text-white/55 leading-relaxed">
                         {service.description}
                       </p>
-                      <div className="mt-4 pt-4 border-t border-white/[0.06]">
+                      <div className="hidden sm:block mt-4 pt-4 border-t border-white/[0.06]">
                         <span className="text-[11px] uppercase tracking-widest text-white/30 font-semibold">
                           Entregable
                         </span>

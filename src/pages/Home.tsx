@@ -9,6 +9,7 @@ import Methodology from '../components/Methodology';
 import QualityPrinciple from '../components/QualityPrinciple';
 import CTAConsulting from '../components/CTAConsulting';
 import Footer from '../components/Footer';
+import WhatsAppButton from '../components/WhatsAppButton';
 
 export default function Home() {
   return (
@@ -26,6 +27,7 @@ export default function Home() {
         <CTAConsulting />
       </main>
       <Footer />
+      <WhatsAppButton />
     </>
   );
 }
