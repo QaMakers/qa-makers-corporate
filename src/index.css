@@ -23,6 +23,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 4.5rem; /* sticky navbar offset for anchor links */
 }
 
 body {
@@ -59,7 +60,7 @@ body {
 
 @media (max-width: 640px) {
   .section-padding {
-    padding: 4rem 0;
+    padding: 4.5rem 0; /* 72px — mobile chapter rhythm */
   }
 }
 

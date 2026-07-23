@@ -1,5 +1,7 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowUpRight, ChevronDown, MapPin } from 'lucide-react';
+import { AnimatePresence, motion } from 'framer-motion';
 
 const WA_URL =
   'https://wa.me/524422691289?text=Hola.%20Vi%20la%20p%C3%A1gina%20de%20QA%20Makers%20y%20me%20gustar%C3%ADa%20conocer%20m%C3%A1s%20sobre%20sus%20servicios.';
@@ -28,7 +30,6 @@ const PRODUCTS = [
   },
 ];
 
-/* ── Brand block (shared between mobile and desktop) ── */
 function BrandBlock() {
   return (
     <div>
@@ -64,7 +65,6 @@ function BrandBlock() {
   );
 }
 
-/* ── Accordion section for mobile ── */
 function AccordionSection({
   title,
   children,
@@ -72,25 +72,43 @@ function AccordionSection({
   title: string;
   children: React.ReactNode;
 }) {
+  const [open, setOpen] = useState(false);
+
   return (
-    /* Native details/summary — no JS state, fully accessible, keyboard-friendly */
-    <details className="group border-b border-white/[0.07]">
-      <summary className="flex items-center justify-between py-4 cursor-pointer select-none list-none [&::-webkit-details-marker]:hidden focus-visible:outline-none focus-visible:text-white">
+    <div className="border-b border-white/[0.07]">
+      <button
+        type="button"
+        aria-expanded={open}
+        onClick={() => setOpen((o) => !o)}
+        className="flex w-full items-center justify-between py-4 text-left focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/30 rounded-sm"
+      >
         <span className="text-[11px] uppercase tracking-wider font-semibold text-white/45">
           {title}
         </span>
         <ChevronDown
           size={14}
           aria-hidden="true"
-          className="text-white/30 transition-transform duration-200 group-open:rotate-180"
+          className={`text-white/30 transition-transform duration-200 ${open ? 'rotate-180' : ''}`}
         />
-      </summary>
-      <div className="pb-5">{children}</div>
-    </details>
+      </button>
+      <AnimatePresence initial={false}>
+        {open && (
+          <motion.div
+            key="content"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.22, ease: [0.4, 0, 0.2, 1] }}
+            className="overflow-hidden"
+          >
+            <div className="pb-5">{children}</div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
   );
 }
 
-/* ── Bottom bar (shared) ── */
 function BottomBar() {
   return (
     <div className="mt-10 pt-5 border-t border-white/[0.08] flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
@@ -116,126 +134,127 @@ export default function Footer() {
         }}
       />
 
-      <div className="container-content pt-12 pb-8">
+      <div className="container-content pt-16 pb-8">
 
         {/* ── MOBILE LAYOUT (< lg) ── */}
-        <div className="lg:hidden space-y-0">
-          <div className="pb-8">
+        <div className="lg:hidden">
+          <div className="pb-10">
             <BrandBlock />
           </div>
 
-          <AccordionSection title="Servicios">
-            <ul className="space-y-3">
-              {SERVICES.map((item) => (
-                <li key={item.label}>
-                  <a
-                    href={item.href}
-                    className="text-sm text-white/55 hover:text-white transition-colors duration-150"
+          <div className="border-t border-white/[0.07]">
+            <AccordionSection title="Servicios">
+              <ul className="space-y-3">
+                {SERVICES.map((item) => (
+                  <li key={item.label}>
+                    <a
+                      href={item.href}
+                      className="text-sm text-white/55 hover:text-white transition-colors duration-150"
+                    >
+                      {item.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </AccordionSection>
+
+            <AccordionSection title="Productos">
+              <div>
+                {PRODUCTS.map((product, i) => (
+                  <div
+                    key={product.name}
+                    className={i > 0 ? 'pt-4 mt-4 border-t border-white/[0.07]' : ''}
                   >
-                    {item.label}
+                    <p className="text-sm font-medium text-white/80">{product.name}</p>
+                    <p className="mt-1 text-xs text-white/40 leading-relaxed">{product.desc}</p>
+                    <a
+                      href={product.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-2 inline-flex items-center gap-1 text-xs font-medium text-white/50 hover:text-white transition-colors duration-150 group"
+                    >
+                      {product.cta}
+                      <ArrowUpRight
+                        size={11}
+                        aria-hidden="true"
+                        className="opacity-60 group-hover:opacity-100 transition-opacity"
+                      />
+                    </a>
+                  </div>
+                ))}
+              </div>
+            </AccordionSection>
+
+            <AccordionSection title="Contacto">
+              <ul className="space-y-3">
+                <li>
+                  <a
+                    href="mailto:contacto@qamakersapp.com"
+                    className="text-sm text-white/55 hover:text-white transition-colors duration-150 break-all"
+                  >
+                    contacto@qamakersapp.com
                   </a>
                 </li>
-              ))}
-            </ul>
-          </AccordionSection>
-
-          <AccordionSection title="Productos">
-            <div className="space-y-0">
-              {PRODUCTS.map((product, i) => (
-                <div
-                  key={product.name}
-                  className={i > 0 ? 'pt-4 mt-4 border-t border-white/[0.07]' : ''}
-                >
-                  <p className="text-sm font-medium text-white/80">{product.name}</p>
-                  <p className="mt-1 text-xs text-white/40 leading-relaxed">{product.desc}</p>
+                <li>
                   <a
-                    href={product.href}
+                    href={WA_URL}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mt-2 inline-flex items-center gap-1 text-xs font-medium text-white/50 hover:text-white transition-colors duration-150 group"
+                    className="text-sm font-medium text-[#25D366]/80 hover:text-[#25D366] transition-colors duration-150"
                   >
-                    {product.cta}
-                    <ArrowUpRight
-                      size={11}
-                      aria-hidden="true"
-                      className="opacity-60 group-hover:opacity-100 transition-opacity"
-                    />
+                    Habla por WhatsApp
                   </a>
-                </div>
-              ))}
-            </div>
-          </AccordionSection>
+                </li>
+                <li>
+                  <a
+                    href="#contacto"
+                    className="text-sm font-medium text-electric/75 hover:text-electric transition-colors duration-150"
+                  >
+                    Habla con un especialista
+                  </a>
+                </li>
+              </ul>
+            </AccordionSection>
 
-          <AccordionSection title="Contacto">
-            <ul className="space-y-3">
-              <li>
-                <a
-                  href="mailto:contacto@qamakersapp.com"
-                  className="text-sm text-white/55 hover:text-white transition-colors duration-150 break-all"
-                >
-                  contacto@qamakersapp.com
-                </a>
-              </li>
-              <li>
-                <a
-                  href={WA_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-sm font-medium text-[#25D366]/80 hover:text-[#25D366] transition-colors duration-150"
-                >
-                  Habla por WhatsApp
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#contacto"
-                  className="text-sm font-medium text-electric/75 hover:text-electric transition-colors duration-150"
-                >
-                  Habla con un especialista
-                </a>
-              </li>
-            </ul>
-          </AccordionSection>
-
-          <AccordionSection title="Legal">
-            <ul className="space-y-3">
-              <li>
-                <Link
-                  to="/privacidad"
-                  className="text-sm text-white/55 hover:text-white transition-colors duration-150"
-                >
-                  Aviso de privacidad
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/terminos"
-                  className="text-sm text-white/55 hover:text-white transition-colors duration-150"
-                >
-                  Términos de uso
-                </Link>
-              </li>
-              <li>
-                {/* Placeholder — página /cookies pendiente */}
-                <span
-                  className="text-sm text-white/28 select-none"
-                  title="Próximamente"
-                  aria-label="Política de cookies — próximamente"
-                >
-                  Política de cookies
-                </span>
-              </li>
-            </ul>
-          </AccordionSection>
+            <AccordionSection title="Legal">
+              <ul className="space-y-3">
+                <li>
+                  <Link
+                    to="/privacidad"
+                    className="text-sm text-white/55 hover:text-white transition-colors duration-150"
+                  >
+                    Aviso de privacidad
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/terminos"
+                    className="text-sm text-white/55 hover:text-white transition-colors duration-150"
+                  >
+                    Términos de uso
+                  </Link>
+                </li>
+                <li>
+                  <span
+                    className="text-sm text-white/28 select-none"
+                    title="Próximamente"
+                    aria-label="Política de cookies — próximamente"
+                  >
+                    Política de cookies
+                  </span>
+                </li>
+              </ul>
+            </AccordionSection>
+          </div>
 
           <BottomBar />
         </div>
 
         {/* ── DESKTOP LAYOUT (lg+) ── */}
         <div className="hidden lg:block">
-          <div className="grid grid-cols-[1.4fr_1fr_1.2fr_1fr] gap-x-16">
+          <div className="grid grid-cols-[1.35fr_1fr_1.25fr_1fr] gap-x-[72px]">
 
-            {/* Col 1 */}
+            {/* Col 1 — Brand */}
             <BrandBlock />
 
             {/* Col 2 — Servicios */}

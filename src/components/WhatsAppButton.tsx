@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 
 export const WA_URL =
@@ -20,6 +21,18 @@ function WhatsAppIcon() {
 
 export default function WhatsAppButton() {
   const shouldReduceMotion = useReducedMotion();
+  const [footerVisible, setFooterVisible] = useState(false);
+
+  useEffect(() => {
+    const footer = document.querySelector('footer');
+    if (!footer) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setFooterVisible(entry.isIntersecting),
+      { threshold: 0.05 }
+    );
+    observer.observe(footer);
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <motion.a
@@ -34,15 +47,22 @@ export default function WhatsAppButton() {
       }}
       initial={
         shouldReduceMotion
-          ? { opacity: 1, scale: 1 }
-          : { opacity: 0, scale: 0.5 }
+          ? { opacity: 1, scale: 1, y: 0 }
+          : { opacity: 0, scale: 0.5, y: 0 }
       }
-      animate={{ opacity: 1, scale: 1 }}
+      animate={{
+        opacity: footerVisible ? 0 : 1,
+        scale: footerVisible ? 0.8 : 1,
+        y: footerVisible ? 16 : 0,
+      }}
       transition={
-        shouldReduceMotion
+        footerVisible
+          ? { duration: 0.2, ease: 'easeIn' }
+          : shouldReduceMotion
           ? { duration: 0 }
           : { duration: 0.4, delay: 1.5, ease: [0.34, 1.56, 0.64, 1] }
       }
+      aria-hidden={footerVisible}
     >
       <WhatsAppIcon />
     </motion.a>
